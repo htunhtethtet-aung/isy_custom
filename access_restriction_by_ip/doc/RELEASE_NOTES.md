@@ -1,7 +1,5 @@
 ## Module <access_restriction_by_ip>
 
-#### 29.11.2023
-#### Version 17.0.1.0.0
-##### ADD
-
-- Initial Commit for Access Restriction By IP
+#### 12.12.2021
+#### Version 15.0.1.0.0
+#### ADD Initial Commit for access_restriction_by_ip

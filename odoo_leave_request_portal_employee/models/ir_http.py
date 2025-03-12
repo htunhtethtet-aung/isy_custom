@@ -11,7 +11,6 @@ class Http(models.AbstractModel):
     _inherit = 'ir.http'
 
     def session_info(self):
-        print("Session Info")
         user = self.env.user
         session_uid = request.session.uid
         version_info = odoo.service.common.exp_version()
@@ -31,6 +30,7 @@ class Http(models.AbstractModel):
         mods = odoo.conf.server_wide_modules or []
         if request.db:
             mods = list(request.registry._init_modules) + mods
+        is_portal_user = user._is_portal()
         is_internal_user = user._is_internal()
         session_info = {
             "uid": session_uid,
@@ -38,6 +38,7 @@ class Http(models.AbstractModel):
             "is_admin": user._is_admin() if session_uid else False,
             "is_public": user._is_public(),
             "is_internal_user": is_internal_user,
+            "is_portal_user": is_portal_user,
             "user_context": user_context,
             "db": self.env.cr.dbname,
             "user_settings": self.env['res.users.settings']._find_or_create_for_user(user)._res_users_settings_format(),

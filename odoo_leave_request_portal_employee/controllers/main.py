@@ -7,6 +7,7 @@ from odoo.http import request
 from datetime import datetime, timedelta
 from odoo.exceptions import UserError
 from odoo.addons.portal.controllers.portal import CustomerPortal, pager as portal_pager, get_records_pager
+from odoo.addons.web.controllers.main import Home 
 
 
 class CustomerPortal(CustomerPortal):
@@ -62,3 +63,20 @@ class CustomerPortal(CustomerPortal):
         })
         return request.render("odoo_leave_request_portal_employee.display_leave_request", values)
     
+
+# class CustomLoginRedirect(Home):
+
+#     @http.route('/web/login', type='http', auth='public', website=True, sitemap=False)
+#     def web_login(self, redirect=None, **kw):
+#         # Call the parent login method
+#         response = super().web_login(redirect=redirect, **kw)
+
+#         # Check if login was successful and user exists
+#         if request.params.get('login_success') and request.session.uid:
+#             user = request.env['res.users'].sudo().browse(request.session.uid)
+
+#             # Redirect portal users (who are now internal-like) to the backend
+#             if user.has_group('base.group_portal'):
+#                 return http.redirect_with_hash('/web#home')
+
+#         return response  # Otherwise, return the default response

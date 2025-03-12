@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="view_email_template_corporate_identity">
         <body>

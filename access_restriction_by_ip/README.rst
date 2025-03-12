@@ -1,45 +1,19 @@
-.. image:: https://img.shields.io/badge/license-AGPL--3-blue.svg
-    :target: https://www.gnu.org/licenses/agpl-3.0-standalone.html
-    :alt: License: AGPL-3
+Access Restriction By IP V15
+============================
 
-Access Restriction By IP
-========================
-This module helps you to restrict user to login from specific ip only.
+This module will restrict users access to his account from the specified IP only. If user access his
+account from  non-specified IP, login will be restricted and a warning message will be displayed in
+login page.
 
-Configuration
-=============
-* No additional configurations needed
+If no IP is specified for a user, then there will not be restriction by IP. He can access from any IP.
 
-Company
--------
-* `Cybrosys Techno Solutions <https://cybrosys.com/>`__
-
-License
--------
-General Public License, Version 3 (AGPL v3).
-(https://www.gnu.org/licenses/agpl-3.0-standalone.html)
 
 Credits
--------
-* Developer: (V17) Mruthul Raj, odoo@cybrosys.com
+=======
+Cybrosys Techno Solutions
 
-Contacts
---------
-* Mail Contact : odoo@cybrosys.com
-* Website : https://cybrosys.com
-
-Bug Tracker
------------
-Bugs are tracked on GitHub Issues. In case of trouble, please check there if your issue has already been reported.
-
-Maintainer
-==========
-.. image:: https://cybrosys.com/images/logo.png
-   :target: https://cybrosys.com
-
-This module is maintained by Cybrosys Technologies.
-For support and more information, please visit `Our Website <https://cybrosys.com/>`__
-
-Further information
-===================
-HTML Description: `<static/description/index.html>`__
+Author
+------
+* Niyas Raphy <odoo@cybrosys.com>
+* V14 Muhammad P <odoo@cybrosys.com>
+* V15 Nikhil Ravi <odoo@cybrosys.com>

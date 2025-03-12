@@ -8,11 +8,9 @@ class ResUsers(models.Model):
 
 
 	def _is_portal(self):
-		print("Portal User")
 		self.ensure_one()
 		return not self.sudo().portal_employee_leave and self.has_group('base.group_portal')
 	
 	def _is_internal(self):
-		print("Internal User",self,self.env.user)
 		self.ensure_one()
 		return self.sudo().portal_employee_leave or super()._is_internal()

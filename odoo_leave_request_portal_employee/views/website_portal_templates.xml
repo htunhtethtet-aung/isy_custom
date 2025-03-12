@@ -7,7 +7,7 @@
             </xpath>
         </template>
 
-        <template id="portal_my_leave_request" name="Portal My Leave Request: Request entries" inherit_id="portal.portal_my_home" priority="30">
+        <template id="portal_my_leave_request" name="Portal My Leave Request: Request entries" inherit_id="portal.portal_my_home" priority="6">
             <xpath expr="//div[@id='portal_alert_category']" position="attributes">
                 <attribute name="t-if">False</attribute>
             </xpath>

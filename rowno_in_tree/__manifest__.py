@@ -1,24 +1,26 @@
+# -*- encoding: utf-8 -*-
 {
-    "name": "Row Number in tree/list view",
-    "version": "17.0.0.0.1",
-    "summary": "Show row number in tree/list view.",
-    "category": "Other",
-    "depends": ["web"],
-    "data": [],
-    "assets": {
-        "web.assets_backend": [
-            "rowno_in_tree/static/src/views/list/list_render.xml",
-            "rowno_in_tree/static/src/js/list_renderer.esm.js",
-        ]
+    'name': "Row Number in tree/list view",
+    'version': '1.0.0',
+    'summary': 'Show row number in tree/list view.',
+    'category': 'Other',
+    'description': """By installing this module, user can see row number in Odoo backend tree view. sequence in list, Numbering List View, row count, row counting, show count list, list view row count, number in row, rij nummer, номер строки, numéro de ligne, Zeilennummer, numero de fila, رقم الصف , nomor baris""",
+    'author': 'Nilesh Sheliya',
+    "depends" : ['web'],
+    "live_test_url": "https://odoo.sheliyainfotech.com/contactus?description=demo:rowno_in_tree&odoo_version=12.0",
+    'data': [
+             'views/listview_templates.xml',
+             ],
+    "images": ["static/description/screen1.png"],
+    'license': 'LGPL-3',
+    'qweb': [
+            ],  
+    'assets': {
+        'web.assets_backend': [
+            'rowno_in_tree/static/src/js/list_view.js',
+        ],
     },
-    "images": ["static/description/blue_banner.png"],
-    "license": "LGPL-3",
-    # Author
-    "author": "Synodica Solutions Pvt. Ltd.",
-    "website": "https://synodica.com",
-    "maintainer": "Synodica Solutions Pvt. Ltd.",
-    "support": "support@synodica.com",
-    "installable": True,
-    "application": True,
-    "auto_install": False,
+    'installable': True,
+    'application'   : True,
+    'auto_install'  : False,
 }
