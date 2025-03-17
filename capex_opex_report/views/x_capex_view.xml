@@ -4,9 +4,8 @@
             <field name="name">Generate Capex Line</field>
             <field name="res_model">x_capex.wizard</field>
             <field name="view_mode">form</field>
-            <field name="binding_model_id" ref="accounting_budget_extension_V7.model_budget_capex" />
+            <field name="binding_model_id" ref="studio_customization.capex_23a15efc-6ab5-4e93-9750-a597660235fc" />
             <field name="target">new</field>
-
         </record>
 
         <record id="x_capex_wizard" model="ir.ui.view">
