@@ -1,0 +1,14 @@
+*.pyc
+**/*.pyc
+*.pyo
+**/*.pyo
+*.swp
+**/*.swp
+*.swo
+**/*.swo
+*.log
+**/*.log
+*.bak
+**/*.bak
+*.tmp
+**/*.tmp

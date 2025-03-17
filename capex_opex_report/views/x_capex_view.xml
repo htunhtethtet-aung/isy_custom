@@ -4,7 +4,7 @@
             <field name="name">Generate Capex Line</field>
             <field name="res_model">x_capex.wizard</field>
             <field name="view_mode">form</field>
-            <field name="binding_model_id" eval="ref('accounting_budget_extension_V7.model_budget_capex')" />
+            <field name="binding_model_id" ref="accounting_budget_extension_V7.model_budget_capex" />
             <field name="target">new</field>
 
         </record>
