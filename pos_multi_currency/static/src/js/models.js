@@ -5,11 +5,20 @@ var models = require('point_of_sale.models');
 // var PosBaseWidget = require('point_of_sale.BaseWidget');
 var _t = core._t;
 
+// models.load_models({
+//     model: 'res.currency',
+//     fields: ['name','symbol','position','rounding','rate'],
+//     loaded: function (self, currencies) {
+//         self.multi_currencies = currencies;
+//     }
+// });
+
 models.load_models({
     model: 'res.currency',
-    fields: ['name','symbol','position','rounding','rate'],
+    fields: ['name', 'symbol', 'position', 'rounding', 'rate'],
     loaded: function (self, currencies) {
         self.multi_currencies = currencies;
+        console.log('🔹 Loaded Currencies:', currencies);  // Debugging
     }
 });
 
@@ -58,16 +67,35 @@ models.Order = models.Order.extend({
         return values;
 
     },
+    // set_currency: function (currency) {
+    //     if (this.currency.id === currency.id) {
+    //         return;
+    //     }
+    //     var form_currency = this.currency || this.pos.currency;
+    //     var to_currency = currency;
+    //     this.orderlines.each(function (line) {
+    //         line.set_currency_price(form_currency, to_currency);
+    //     });
+    //     this.currency = currency;
+    // },
+
     set_currency: function (currency) {
-        if (this.currency.id === currency.id) {
-            return;
-        }
-        var form_currency = this.currency || this.pos.currency;
-        var to_currency = currency;
+        if (this.currency.id === currency.id) return;
+
+        let from_currency = this.currency || this.pos.currency;
+        let to_currency = currency;
+    
         this.orderlines.each(function (line) {
-            line.set_currency_price(form_currency, to_currency);
+            line.set_currency_price(from_currency, to_currency);
         });
+    
         this.currency = currency;
+        
+        console.log('🔹 Currency Updated:', currency.name);
+
+        // 🔥 Explicitly trigger UI refresh 🔥
+        this.trigger('change', this);
+        this.pos.get_order().trigger('change', this);
     },
     get_currency: function (){
         return this.currency;
@@ -116,10 +144,22 @@ models.Order = models.Order.extend({
     // },
 });
 
+// models.Orderline = models.Orderline.extend({
+//     set_currency_price: function (form_currency, to_currency){
+//         var conversion_rate =  to_currency.rate / form_currency.rate;
+//         this.price = this.price * conversion_rate;
+//     },
+// });
+
 models.Orderline = models.Orderline.extend({
-    set_currency_price: function (form_currency, to_currency){
-        var conversion_rate =  to_currency.rate / form_currency.rate;
+    set_currency_price: function (from_currency, to_currency) {
+        if (!from_currency || !to_currency || !from_currency.rate || !to_currency.rate) return;
+
+        let conversion_rate = to_currency.rate / from_currency.rate;
+        console.log(`🔹 Converting Price: ${this.price} * ${conversion_rate}`);
+
         this.price = this.price * conversion_rate;
+        this.trigger('change', this);  // 🔥 Force UI refresh
     },
 });
 

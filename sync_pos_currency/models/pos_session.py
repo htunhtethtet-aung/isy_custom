@@ -51,9 +51,16 @@ class PosSession(models.Model):
             order_is_invoiced = order.is_invoiced
             for payment in order.payment_ids:
                 payment_currency = payment.payment_method_id.journal_id.currency_id
-                if payment_currency.id!=self.company_id.currency_id.id:
-                    # amount = payment_currency._convert(payment.currency_amount_total, self.company_id.currency_id, self.company_id, payment.payment_date)
-                    amount = payment.currency_amount_total
+                # if payment_currency.id!=self.company_id.currency_id.id:
+                #     # amount = payment_currency._convert(payment.currency_amount_total, self.company_id.currency_id, self.company_id, payment.payment_date)
+                #     amount = payment.currency_amount_total
+                # else:
+                #     amount = payment.amount
+                if payment_currency.id != self.company_id.currency_id.id:
+                    if payment.payment_method_id.journal_id.type == 'sale':
+                        amount = payment.amount  # Use payment.amount for POS journal
+                    else:
+                        amount = payment.currency_amount_total
                 else:
                     amount = payment.amount
                 if float_is_zero(amount, precision_rounding=currency_rounding):
@@ -252,6 +259,8 @@ class PosSession(models.Model):
                 amount_converted = currency._convert(amount, self.company_id.currency_id,self.company_id, date, round=round)
             else:
                 amount_converted = amount
+                # amount_converted = currency._convert(amount, self.company_id.currency_id,self.company_id, date, round=round)
+
         # ISY CUSTOMIZED END
         else:
             amount_converted = self._amount_converter(amount, date, round)

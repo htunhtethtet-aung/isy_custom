@@ -12,16 +12,17 @@ from odoo import api, fields, models, _
 class PosConfig(models.Model):
     _inherit = 'pos.config'
 
-    @api.constrains('pricelist_id', 'available_pricelist_ids', 'journal_id', 'invoice_journal_id', 'journal_ids')
-    def _check_currencies(self):
-        if self.pricelist_id not in self.available_pricelist_ids:
-            raise ValidationError(_("The default pricelist must be included in the available pricelists."))
-        if any(self.available_pricelist_ids.mapped(lambda pricelist: pricelist.currency_id != self.company_id.currency_id)):
-            raise ValidationError(_("All available pricelists must be in the same currency as the company."))
-        if self.invoice_journal_id.currency_id and self.invoice_journal_id.currency_id != self.company_id.currency_id:
-            raise ValidationError(_("The invoice journal must be in the same currency as the company currency."))
-        if self.journal_id.currency_id and self.journal_id.currency_id != self.company_id.currency_id:
-            raise ValidationError(_("The sales journal must be in the same currency as the company currency."))
+    # @api.constrains('pricelist_id', 'available_pricelist_ids', 'journal_id', 'invoice_journal_id', 'journal_ids')
+    # def _check_currencies(self):
+    #     # if self.pricelist_id not in self.available_pricelist_ids:
+    #     #     raise ValidationError(_("The default pricelist must be included in the available pricelists."))
+    #     # # if any(self.available_pricelist_ids.mapped(lambda pricelist: pricelist.currency_id != self.company_id.currency_id)):
+    #     # #     raise ValidationError(_("All available pricelists must be in the same currency as the company."))
+    #     # if self.invoice_journal_id.currency_id and self.invoice_journal_id.currency_id != self.company_id.currency_id:
+    #     #     raise ValidationError(_("The invoice journal must be in the same currency as the company currency."))
+    #     # if self.journal_id.currency_id and self.journal_id.currency_id != self.company_id.currency_id:
+    #     #     raise ValidationError(_("The sales journal must be in the same currency as the company currency."))
+
 
 
 class PosSession(models.Model):
@@ -56,7 +57,10 @@ class PosSession(models.Model):
         split_inv_payment_receivable_lines = defaultdict(lambda: self.env['account.move.line'])
         rounded_globally = self.company_id.tax_calculation_rounding_method == 'round_globally'
         pos_receivable_account = self.company_id.account_default_pos_receivable_account_id
-        currency_rounding = self.currency_id.rounding if self.currency_id.rounding > 0 else 0.01
+        #currency_rounding = self.currency_id.rounding if self.currency_id.rounding > 0 else 0.01
+        currency_rounding = self.currency_id.rounding
+
+
         
         for order in self.order_ids:
             # ISY CUSTOMIZED
@@ -373,7 +377,8 @@ class PosOrder(models.Model):
     def _order_fields(self, ui_order):
         res = super(PosOrder, self)._order_fields(ui_order)
         currency = ui_order.get('currency')
-        res['order_currency_id'] = currency['id'] if currency else False
+        # res['order_currency_id'] = currency['id'] if currency else False
+        res['order_currency_id'] = self.env['pos.session'].browse(ui_order['pos_session_id']).currency_id.id
         return res
 
 class PosPaymentMethod(models.Model):
